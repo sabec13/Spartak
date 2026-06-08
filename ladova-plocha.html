@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HK Spartak Dubnica – Ľadová plocha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+
+/* ── PAGE HERO ── */
+.page-hero {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 56px 20px 44px;
+  border-bottom: 1px solid rgba(26,125,255,0.12);
+}
+
+.page-hero .season-tag {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--blue-deep);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 3px;
+  padding: 5px 16px;
+  border-radius: 2px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.page-hero h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  letter-spacing: 6px;
+  color: var(--white);
+  line-height: 1;
+}
+
+.page-hero p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin-top: 12px;
+}
+
+/* ── WEEK NAV ── */
+.week-nav {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.week-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white);
+  min-width: 240px;
+  text-align: center;
+}
+
+.week-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--white);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.week-btn:hover {
+  background: rgba(26,125,255,0.15);
+  border-color: rgba(26,125,255,0.4);
+}
+
+/* ── LEGEND ── */
+.legend {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 20px 20px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* ── SCHEDULE TABLE ── */
+.schedule-wrap {
+  position: relative;
+  z-index: 1;
+  padding: 0 30px 60px;
+  overflow-x: auto;
+}
+
+.schedule-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* header row */
+.schedule-table thead tr th {
+  background: rgba(0,53,128,0.7);
+  border-bottom: 2px solid var(--blue-bright);
+  padding: 14px 8px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.schedule-table thead tr th:first-child {
+  text-align: right;
+  padding-right: 16px;
+  width: 72px;
+  color: var(--text-muted);
+}
+
+.th-day { display: block; font-size: 0.95rem; color: var(--white); letter-spacing: 1px; }
+.th-date { display: block; font-size: 0.68rem; color: var(--text-muted); margin-top: 2px; letter-spacing: 1px; }
+.th-today .th-day  { color: var(--accent); }
+.th-today .th-date { color: var(--accent); opacity: 0.7; }
+
+/* time rows */
+.schedule-table tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.15s;
+}
+
+.schedule-table tbody tr:last-child { border-bottom: none; }
+.schedule-table tbody tr:hover { background: rgba(26,125,255,0.04); }
+
+.time-cell {
+  padding: 0 16px 0 0;
+  text-align: right;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  vertical-align: top;
+  padding-top: 10px;
+  width: 72px;
+}
+
+.slot-cell {
+  padding: 5px 5px;
+  vertical-align: top;
+  height: 58px;
+}
+
+.slot {
+  height: 100%;
+  min-height: 46px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.3;
+  cursor: default;
+  transition: filter 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.slot:hover { filter: brightness(1.12); }
+
+.slot-empty {
+  background: rgba(255,255,255,0.02);
+  border: 1px dashed rgba(255,255,255,0.06);
+  color: transparent;
+}
+
+.slot-name { font-weight: 700; font-size: 0.75rem; }
+.slot-sub  { font-weight: 400; opacity: 0.8; font-size: 0.68rem; margin-top: 1px; }
+
+/* Category colours */
+.cat-verejne   { background: rgba(26,125,255,0.18); border: 1px solid rgba(26,125,255,0.3); color: #7ab8ff; }
+.cat-hokej     { background: rgba(232,176,32,0.17); border: 1px solid rgba(232,176,32,0.35); color: #f0cc60; }
+.cat-mladez    { background: rgba(80,200,100,0.16); border: 1px solid rgba(80,200,100,0.3); color: #70e080; }
+.cat-kurz      { background: rgba(200,80,220,0.16); border: 1px solid rgba(200,80,220,0.3); color: #e080f0; }
+.cat-zimba     { background: rgba(255,120,60,0.16); border: 1px solid rgba(255,120,60,0.3); color: #ffaa70; }
+.cat-rezerva   { background: rgba(180,180,180,0.08); border: 1px solid rgba(180,180,180,0.2); color: #aaa; }
+
+/* today column highlight */
+.col-today { background: rgba(232,176,32,0.04); }
+
+@media(max-width:700px) {
+  .schedule-wrap { padding: 0 10px 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="logo-section">
+    <img src="SpartakDubnica.png" alt="Spartak Dubnica">
+    <h1>HK Spartak Dubnica</h1>
+  </div>
+  <nav>
+    <a href="index.html">Aktuality</a>
+    <a href="ladova-plocha.html" style="color:var(--white)">Ľadová plocha</a>
+    <a href="#">Mládež</a>
+    <a href="klub.html">Klub</a>
+  </nav>
+  <div class="menu-btn">&#9776;</div>
+</header>
+
+<!-- ── HERO ── -->
+<div class="page-hero">
+  <span class="season-tag">Sezóna 2025 / 2026</span>
+  <h2>Ľadová plocha</h2>
+  <p>ZŠ Dubnica nad Váhom &nbsp;·&nbsp; Partizánska 1118/44 &nbsp;·&nbsp; Prevádzka denne 8:00 – 20:00</p>
+</div>
+
+<!-- ── WEEK NAV ── -->
+<div class="week-nav">
+  <button class="week-btn" onclick="shiftWeek(-1)">&#8249;</button>
+  <div class="week-label" id="weekLabel"></div>
+  <button class="week-btn" onclick="shiftWeek(1)">&#8250;</button>
+</div>
+
+<!-- ── LEGEND ── -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot cat-hokej"></div> Hokejový tréning</div>
+  <div class="legend-item"><div class="legend-dot cat-mladez"></div> Mládežnícky tréning</div>
+  <div class="legend-item"><div class="legend-dot cat-verejne"></div> Verejné korčuľovanie</div>
+  <div class="legend-item"><div class="legend-dot cat-kurz"></div> Kurz korčuľovania</div>
+  <div class="legend-item"><div class="legend-dot cat-zimba"></div> Zimba (pre deti)</div>
+  <div class="legend-item"><div class="legend-dot cat-rezerva"></div> Rezervácia</div>
+</div>
+
+<!-- ── SCHEDULE ── -->
+<div class="schedule-wrap">
+  <table class="schedule-table" id="scheduleTable">
+    <thead id="scheduleHead"></thead>
+    <tbody id="scheduleBody"></tbody>
+  </table>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">
+    <img src="SpartakDubnica.png" alt="Spartak Dubnica">
+    <h3>HK Spartak Dubnica</h3>
+    <p>Partizánska 1118/44<br>018 41 Dubnica nad Váhom</p>
+  </div>
+  <div class="footer-col">
+    <h4>Kontakt</h4>
+    <p>+421 900 123 456</p>
+    <p>info@spartakdubnica.sk</p>
+  </div>
+  <div class="footer-col">
+    <h4>Navigácia</h4>
+    <a href="index.html">Aktuality</a>
+    <a href="ladova-plocha.html">Ľadová plocha</a>
+    <a href="#">Mládež</a>
+    <a href="klub.html">Klub</a>
+  </div>
+  <div class="footer-col">
+    <h4>Sociálne siete</h4>
+    <a href="#">Facebook</a>
+    <a href="#">Instagram</a>
+    <a href="#">Youtube</a>
+  </div>
+  <div class="footer-bottom">© 2026 HK Spartak Dubnica · Všetky práva vyhradené</div>
+</footer>
+
+<script>
+// ── DATA ── 
+// Weekly repeating schedule: [dayIndex 0=Mon..6=Sun][hour 8..19] = slot or null
+// hour 8 = 08:00-09:00, hour 19 = 19:00-20:00
+
+const WEEKLY = {
+  // Monday
+  0: {
+     8: { name: 'Hokejový tréning', sub: 'A-mužstvo', cat: 'cat-hokej' },
+     9: { name: 'Hokejový tréning', sub: 'A-mužstvo', cat: 'cat-hokej' },
+    10: { name: 'Mládež U10', sub: 'Tréning', cat: 'cat-mladez' },
+    11: { name: 'Mládež U12', sub: 'Tréning', cat: 'cat-mladez' },
+    12: null,
+    13: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    14: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    15: { name: 'Kurz korčuľovania', sub: 'Začiatočníci', cat: 'cat-kurz' },
+    16: { name: 'Mládež U16', sub: 'Tréning', cat: 'cat-mladez' },
+    17: { name: 'Mládež U16', sub: 'Tréning', cat: 'cat-mladez' },
+    18: { name: 'Hokejový tréning', sub: 'B-mužstvo', cat: 'cat-hokej' },
+    19: { name: 'Hokejový tréning', sub: 'B-mužstvo', cat: 'cat-hokej' },
+  },
+  // Tuesday
+  1: {
+     8: { name: 'Zimba', sub: 'Pre deti 3–6 r.', cat: 'cat-zimba' },
+     9: { name: 'Zimba', sub: 'Pre deti 3–6 r.', cat: 'cat-zimba' },
+    10: { name: 'Mládež U8', sub: 'Tréning', cat: 'cat-mladez' },
+    11: null,
+    12: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    13: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    14: { name: 'Kurz korčuľovania', sub: 'Pokročilí', cat: 'cat-kurz' },
+    15: { name: 'Kurz korčuľovania', sub: 'Pokročilí', cat: 'cat-kurz' },
+    16: { name: 'Mládež U14', sub: 'Tréning', cat: 'cat-mladez' },
+    17: { name: 'Mládež U14', sub: 'Tréning', cat: 'cat-mladez' },
+    18: { name: 'Hokejový tréning', sub: 'A-mužstvo', cat: 'cat-hokej' },
+    19: { name: 'Hokejový tréning', sub: 'A-mužstvo', cat: 'cat-hokej' },
+  },
+  // Wednesday
+  2: {
+     8: { name: 'Hokejový tréning', sub: 'A-mužstvo', cat: 'cat-hokej' },
+     9: { name: 'Hokejový tréning', sub: 'A-mužstvo', cat: 'cat-hokej' },
+    10: { name: 'Mládež U12', sub: 'Tréning', cat: 'cat-mladez' },
+    11: { name: 'Mládež U10', sub: 'Tréning', cat: 'cat-mladez' },
+    12: { name: 'Zimba', sub: 'Pre deti 3–6 r.', cat: 'cat-zimba' },
+    13: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    14: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    15: { name: 'Rezervácia', sub: 'Firemný event', cat: 'cat-rezerva' },
+    16: { name: 'Mládež U16', sub: 'Tréning', cat: 'cat-mladez' },
+    17: { name: 'Mládež U18', sub: 'Tréning', cat: 'cat-mladez' },
+    18: { name: 'Kurz korčuľovania', sub: 'Začiatočníci', cat: 'cat-kurz' },
+    19: { name: 'Hokejový tréning', sub: 'B-mužstvo', cat: 'cat-hokej' },
+  },
+  // Thursday
+  3: {
+     8: { name: 'Zimba', sub: 'Pre deti 3–6 r.', cat: 'cat-zimba' },
+     9: { name: 'Zimba', sub: 'Pre deti 3–6 r.', cat: 'cat-zimba' },
+    10: { name: 'Mládež U8', sub: 'Tréning', cat: 'cat-mladez' },
+    11: null,
+    12: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    13: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    14: { name: 'Kurz korčuľovania', sub: 'Pokročilí', cat: 'cat-kurz' },
+    15: { name: 'Mládež U14', sub: 'Tréning', cat: 'cat-mladez' },
+    16: { name: 'Mládež U14', sub: 'Tréning', cat: 'cat-mladez' },
+    17: { name: 'Hokejový tréning', sub: 'A-mužstvo', cat: 'cat-hokej' },
+    18: { name: 'Hokejový tréning', sub: 'A-mužstvo', cat: 'cat-hokej' },
+    19: { name: 'Rezervácia', sub: 'Škola', cat: 'cat-rezerva' },
+  },
+  // Friday
+  4: {
+     8: { name: 'Hokejový tréning', sub: 'B-mužstvo', cat: 'cat-hokej' },
+     9: { name: 'Hokejový tréning', sub: 'B-mužstvo', cat: 'cat-hokej' },
+    10: { name: 'Mládež U16', sub: 'Tréning', cat: 'cat-mladez' },
+    11: { name: 'Mládež U18', sub: 'Tréning', cat: 'cat-mladez' },
+    12: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    13: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    14: { name: 'Kurz korčuľovania', sub: 'Začiatočníci', cat: 'cat-kurz' },
+    15: { name: 'Zimba', sub: 'Pre deti 3–6 r.', cat: 'cat-zimba' },
+    16: { name: 'Mládež U12', sub: 'Tréning', cat: 'cat-mladez' },
+    17: { name: 'Mládež U10', sub: 'Tréning', cat: 'cat-mladez' },
+    18: { name: 'Verejné korčuľovanie', sub: 'Večerné', cat: 'cat-verejne' },
+    19: { name: 'Verejné korčuľovanie', sub: 'Večerné', cat: 'cat-verejne' },
+  },
+  // Saturday
+  5: {
+     8: { name: 'Hokejový tréning', sub: 'A-mužstvo', cat: 'cat-hokej' },
+     9: { name: 'Hokejový tréning', sub: 'A-mužstvo', cat: 'cat-hokej' },
+    10: { name: 'Mládež U8', sub: 'Tréning', cat: 'cat-mladez' },
+    11: { name: 'Mládež U10', sub: 'Tréning', cat: 'cat-mladez' },
+    12: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    13: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    14: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    15: { name: 'Kurz korčuľovania', sub: 'Deti', cat: 'cat-kurz' },
+    16: { name: 'Zimba', sub: 'Pre deti 3–6 r.', cat: 'cat-zimba' },
+    17: { name: 'Rezervácia', sub: 'Firemný event', cat: 'cat-rezerva' },
+    18: { name: 'Verejné korčuľovanie', sub: 'Večerné', cat: 'cat-verejne' },
+    19: { name: 'Verejné korčuľovanie', sub: 'Večerné', cat: 'cat-verejne' },
+  },
+  // Sunday
+  6: {
+     8: null,
+     9: { name: 'Zimba', sub: 'Pre deti 3–6 r.', cat: 'cat-zimba' },
+    10: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    11: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    12: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    13: { name: 'Mládež U12', sub: 'Zápas / tréning', cat: 'cat-mladez' },
+    14: { name: 'Mládež U14', sub: 'Zápas / tréning', cat: 'cat-mladez' },
+    15: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    16: { name: 'Verejné korčuľovanie', sub: 'Vstup voľný', cat: 'cat-verejne' },
+    17: { name: 'Hokejový tréning', sub: 'A-mužstvo', cat: 'cat-hokej' },
+    18: { name: 'Hokejový tréning', sub: 'A-mužstvo', cat: 'cat-hokej' },
+    19: null,
+  },
+};
+
+const DAY_NAMES = ['Pondelok','Utorok','Streda','Štvrtok','Piatok','Sobota','Nedeľa'];
+const HOURS = [8,9,10,11,12,13,14,15,16,17,18,19];
+
+let weekOffset = 0;
+
+function getMonday(offset) {
+  const now = new Date();
+  const day = now.getDay(); // 0=Sun
+  const diff = (day === 0 ? -6 : 1 - day); // days to Monday
+  const mon = new Date(now);
+  mon.setDate(now.getDate() + diff + offset * 7);
+  mon.setHours(0,0,0,0);
+  return mon;
+}
+
+function fmt(d) {
+  return d.getDate().toString().padStart(2,'0') + '.' + (d.getMonth()+1).toString().padStart(2,'0') + '.';
+}
+
+function isToday(d) {
+  const now = new Date();
+  return d.getDate() === now.getDate() && d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+}
+
+function renderSchedule() {
+  const mon = getMonday(weekOffset);
+  const days = Array.from({length:7}, (_,i) => { const d = new Date(mon); d.setDate(mon.getDate()+i); return d; });
+
+  // Week label
+  const sun = days[6];
+  document.getElementById('weekLabel').textContent =
+    fmt(mon) + ' – ' + fmt(sun) + ' ' + sun.getFullYear();
+
+  // Head
+  const head = document.getElementById('scheduleHead');
+  head.innerHTML = '';
+  const tr = document.createElement('tr');
+  const th0 = document.createElement('th');
+  th0.textContent = 'Čas';
+  tr.appendChild(th0);
+  days.forEach((d,i) => {
+    const th = document.createElement('th');
+    if (isToday(d)) th.className = 'th-today';
+    th.innerHTML = `<span class="th-day">${DAY_NAMES[i]}</span><span class="th-date">${fmt(d)}</span>`;
+    tr.appendChild(th);
+  });
+  head.appendChild(tr);
+
+  // Body
+  const body = document.getElementById('scheduleBody');
+  body.innerHTML = '';
+  HOURS.forEach(h => {
+    const tr = document.createElement('tr');
+    const tc = document.createElement('td');
+    tc.className = 'time-cell';
+    tc.textContent = h.toString().padStart(2,'0') + ':00';
+    tr.appendChild(tc);
+    days.forEach((d,i) => {
+      const td = document.createElement('td');
+      td.className = 'slot-cell' + (isToday(d) ? ' col-today' : '');
+      const slot = WEEKLY[i][h];
+      if (slot) {
+        td.innerHTML = `<div class="slot ${slot.cat}"><span class="slot-name">${slot.name}</span><span class="slot-sub">${slot.sub}</span></div>`;
+      } else {
+        td.innerHTML = `<div class="slot slot-empty"></div>`;
+      }
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+}
+
+function shiftWeek(dir) {
+  weekOffset += dir;
+  renderSchedule();
+}
+
+renderSchedule();
+</script>
+<script src="script.js"></script>
+</body>
+</html>

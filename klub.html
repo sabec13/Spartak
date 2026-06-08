@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HK Spartak Dubnica – Klub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── KLUB PAGE EXTRAS ── */
+.klub-hero {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(135deg, rgba(0,53,128,0.5) 0%, rgba(0,10,30,0.8) 100%);
+  border-bottom: 1px solid rgba(26,125,255,0.2);
+  padding: 48px 60px 36px;
+}
+
+.klub-identity {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 36px;
+}
+
+.klub-identity img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(26,125,255,0.5));
+}
+
+.klub-identity-text h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: 4px;
+  color: var(--white);
+  line-height: 1;
+}
+
+.klub-identity-text .division {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.klub-identity-text .website {
+  font-size: 0.8rem;
+  color: var(--blue-light);
+  margin-top: 4px;
+  text-decoration: none;
+}
+
+.klub-stats-bar {
+  display: flex;
+  gap: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.klub-stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 22px 16px;
+  border-right: 1px solid rgba(26,125,255,0.12);
+  transition: background 0.2s;
+}
+
+.klub-stat-item:last-child { border-right: none; }
+.klub-stat-item:hover { background: rgba(26,125,255,0.08); }
+
+.klub-stat-item .val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--accent);
+  line-height: 1;
+  display: block;
+}
+
+.klub-stat-item .lbl {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 5px;
+  display: block;
+}
+
+/* ── TABS ── */
+.klub-tabs {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 0;
+  padding: 0 60px;
+  background: rgba(0,10,25,0.6);
+  border-bottom: 1px solid rgba(26,125,255,0.12);
+  overflow-x: auto;
+}
+
+.klub-tabs a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 18px 22px;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.klub-tabs a:hover { color: var(--white); }
+.klub-tabs a.active { color: var(--white); border-bottom-color: var(--accent); }
+
+/* ── PREHĽAD CONTENT ── */
+.prehlad-section {
+  position: relative;
+  z-index: 1;
+  padding: 50px 60px;
+}
+
+.top-hraci-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+
+.top-hraci-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.top-hrac-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+}
+
+.top-hrac-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(26,125,255,0.45);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.35);
+}
+
+.top-hrac-cat {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 10px 12px 0;
+}
+
+.top-hrac-photo {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(26,125,255,0.35);
+  background: rgba(255,255,255,0.05);
+  margin: 12px auto 10px;
+  display: block;
+}
+
+.top-hrac-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--white);
+  padding: 0 10px;
+  line-height: 1.3;
+}
+
+.top-hrac-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--accent);
+  padding: 6px 0 16px;
+  display: block;
+}
+
+/* ── RANKING LISTS ── */
+.rankings-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.ranking-col {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ranking-col-head {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(26,125,255,0.12);
+  background: rgba(0,53,128,0.3);
+}
+
+.ranking-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.ranking-row:last-child { border-bottom: none; }
+.ranking-row:hover { background: rgba(26,125,255,0.07); }
+
+.ranking-row .r-name {
+  font-size: 0.78rem;
+  color: var(--white);
+  font-weight: 500;
+}
+
+.ranking-row .r-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px) {
+  .top-hraci-grid,
+  .rankings-grid { grid-template-columns: repeat(3, 1fr); }
+  .klub-hero,
+  .prehlad-section { padding-left: 30px; padding-right: 30px; }
+  .klub-tabs { padding: 0 30px; }
+}
+
+@media(max-width:700px) {
+  .klub-hero { padding: 30px 20px 24px; }
+  .klub-identity img { width: 64px; height: 64px; }
+  .klub-identity-text h2 { font-size: 1.6rem; }
+  .klub-stats-bar { flex-wrap: wrap; }
+  .klub-stat-item { flex: 1 1 33%; }
+  .top-hraci-grid,
+  .rankings-grid { grid-template-columns: repeat(2, 1fr); }
+  .prehlad-section { padding: 30px 20px; }
+  .klub-tabs { padding: 0 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="logo-section">
+    <img src="SpartakDubnica.png" alt="Spartak Dubnica">
+    <h1>HK Spartak Dubnica</h1>
+  </div>
+  <nav>
+    <a href="index.html">Aktuality</a>
+    <a href="ladova-plocha.html">Ľadová plocha</a>
+    <a href="#">Mládež</a>
+    <a href="klub.html" style="color:var(--white)">Klub</a>
+  </nav>
+  <div class="menu-btn">&#9776;</div>
+</header>
+
+<!-- ── KLUB HERO ── -->
+<div class="klub-hero">
+  <div class="klub-identity">
+    <img src="SpartakDubnica.png" alt="Spartak Dubnica">
+    <div class="klub-identity-text">
+      <h2>HK Spartak Dubnica</h2>
+      <div class="division">DCA · 2. liga – Západ</div>
+      <a class="website" href="https://spartakdubnica.hockeyslovakia.sk/sk/" target="_blank">spartakdubnica.hockeyslovakia.sk</a>
+    </div>
+  </div>
+
+  <div class="klub-stats-bar">
+    <div class="klub-stat-item"><span class="val">49</span><span class="lbl">Zápasy</span></div>
+    <div class="klub-stat-item"><span class="val">28</span><span class="lbl">Výhry</span></div>
+    <div class="klub-stat-item"><span class="val">75</span><span class="lbl">Body</span></div>
+    <div class="klub-stat-item"><span class="val">187 : 141</span><span class="lbl">Góly</span></div>
+    <div class="klub-stat-item"><span class="val">11,4 %</span><span class="lbl">Strela na bránu</span></div>
+    <div class="klub-stat-item"><span class="val">92,1 %</span><span class="lbl">Zásahy</span></div>
+  </div>
+</div>
+
+<!-- ── TABS ── -->
+<div class="klub-tabs">
+  <a href="#" class="active">Prehľad</a>
+  <a href="#">Program a výsledky</a>
+  <a href="#">Klubové štatistiky</a>
+  <a href="#">Súpiska</a>
+  <a href="#">Štatistiky hráčov</a>
+  <a href="#">História</a>
+</div>
+
+<!-- ── PREHĽAD ── -->
+<div class="prehlad-section">
+
+  <div class="top-hraci-title">Top hráči</div>
+
+  <div class="top-hraci-grid">
+
+    <div class="top-hrac-card">
+      <div class="top-hrac-cat">Body</div>
+      <img class="top-hrac-photo" src="players/RadoslavTybor.png" alt="Radoslav Tybor"
+        onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2288%22 height=%2288%22><circle cx=%2244%22 cy=%2244%22 r=%2244%22 fill=%22%23003580%22/><text x=%2250%25%22 y=%2255%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22white%22 font-size=%2228%22 font-family=%22Arial%22 font-weight=%22bold%22>RT</text></svg>';this.onerror=null">
+      <div class="top-hrac-name">TYBOR, Radoslav</div>
+      <span class="top-hrac-val">67</span>
+    </div>
+
+    <div class="top-hrac-card">
+      <div class="top-hrac-cat">Góly</div>
+      <img class="top-hrac-photo" src="players/RadoslavTybor.png" alt="Radoslav Tybor"
+        onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2288%22 height=%2288%22><circle cx=%2244%22 cy=%2244%22 r=%2244%22 fill=%22%23003580%22/><text x=%2250%25%22 y=%2255%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22white%22 font-size=%2228%22 font-family=%22Arial%22 font-weight=%22bold%22>RT</text></svg>';this.onerror=null">
+      <div class="top-hrac-name">TYBOR, Radoslav</div>
+      <span class="top-hrac-val">28</span>
+    </div>
+
+    <div class="top-hrac-card">
+      <div class="top-hrac-cat">Asistencie</div>
+      <img class="top-hrac-photo" src="players/AndreiLegalin.png" alt="Andrei Legalin"
+        onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2288%22 height=%2288%22><circle cx=%2244%22 cy=%2244%22 r=%2244%22 fill=%22%23003580%22/><text x=%2250%25%22 y=%2255%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22white%22 font-size=%2228%22 font-family=%22Arial%22 font-weight=%22bold%22>AL</text></svg>';this.onerror=null">
+      <div class="top-hrac-name">LEGALIN, Andrei</div>
+      <span class="top-hrac-val">39</span>
+    </div>
+
+    <div class="top-hrac-card">
+      <div class="top-hrac-cat">Plus / Mínus</div>
+      <img class="top-hrac-photo" src="players/MarekHovorka.png" alt="Marek Hovorka"
+        onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2288%22 height=%2288%22><circle cx=%2244%22 cy=%2244%22 r=%2244%22 fill=%22%23003580%22/><text x=%2250%25%22 y=%2255%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22white%22 font-size=%2228%22 font-family=%22Arial%22 font-weight=%22bold%22>MH</text></svg>';this.onerror=null">
+      <div class="top-hrac-name">HOVORKA, Marek</div>
+      <span class="top-hrac-val">+18</span>
+    </div>
+
+    <div class="top-hrac-card">
+      <div class="top-hrac-cat">Zásahy</div>
+      <img class="top-hrac-photo" src="players/AdamKukucka.jpg" alt="Adam Kukučka"
+        onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2288%22 height=%2288%22><circle cx=%2244%22 cy=%2244%22 r=%2244%22 fill=%22%23003580%22/><text x=%2250%25%22 y=%2255%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22white%22 font-size=%2228%22 font-family=%22Arial%22 font-weight=%22bold%22>AK</text></svg>';this.onerror=null">
+      <div class="top-hrac-name">KUKUČKA, Adam</div>
+      <span class="top-hrac-val">92,1 %</span>
+    </div>
+
+  </div>
+
+  <!-- ── RANKING LISTS ── -->
+  <div class="rankings-grid">
+
+    <div class="ranking-col">
+      <div class="ranking-col-head">Body</div>
+      <div class="ranking-row"><span class="r-name">LEGALIN, Andrei</span><span class="r-val">60</span></div>
+      <div class="ranking-row"><span class="r-name">HOVORKA, Marek</span><span class="r-val">40</span></div>
+      <div class="ranking-row"><span class="r-name">PANGELOV, Pylyp</span><span class="r-val">39</span></div>
+      <div class="ranking-row"><span class="r-name">ŠVEC, Jozef</span><span class="r-val">29</span></div>
+      <div class="ranking-row"><span class="r-name">ĎURIŠ, Oliver</span><span class="r-val">24</span></div>
+    </div>
+
+    <div class="ranking-col">
+      <div class="ranking-col-head">Góly</div>
+      <div class="ranking-row"><span class="r-name">LEGALIN, Andrei</span><span class="r-val">23</span></div>
+      <div class="ranking-row"><span class="r-name">ĎURIŠ, Oliver</span><span class="r-val">11</span></div>
+      <div class="ranking-row"><span class="r-name">FERANEC, Michal</span><span class="r-val">9</span></div>
+      <div class="ranking-row"><span class="r-name">PANGELOV, Pylyp</span><span class="r-val">9</span></div>
+      <div class="ranking-row"><span class="r-name">ŠVEC, Jozef</span><span class="r-val">8</span></div>
+    </div>
+
+    <div class="ranking-col">
+      <div class="ranking-col-head">Asistencie</div>
+      <div class="ranking-row"><span class="r-name">LEGALIN, Andrei</span><span class="r-val">37</span></div>
+      <div class="ranking-row"><span class="r-name">HOVORKA, Marek</span><span class="r-val">32</span></div>
+      <div class="ranking-row"><span class="r-name">PANGELOV, Pylyp</span><span class="r-val">30</span></div>
+      <div class="ranking-row"><span class="r-name">ŠVEC, Jozef</span><span class="r-val">21</span></div>
+      <div class="ranking-row"><span class="r-name">ĎURIŠ, Oliver</span><span class="r-val">13</span></div>
+    </div>
+
+    <div class="ranking-col">
+      <div class="ranking-col-head">Plus / Mínus</div>
+      <div class="ranking-row"><span class="r-name">TYBOR, Radoslav</span><span class="r-val">+17</span></div>
+      <div class="ranking-row"><span class="r-name">LEGALIN, Andrei</span><span class="r-val">+15</span></div>
+      <div class="ranking-row"><span class="r-name">ŠVEC, Jozef</span><span class="r-val">+11</span></div>
+      <div class="ranking-row"><span class="r-name">PANGELOV, Pylyp</span><span class="r-val">+9</span></div>
+      <div class="ranking-row"><span class="r-name">FERANEC, Michal</span><span class="r-val">+7</span></div>
+    </div>
+
+    <div class="ranking-col">
+      <div class="ranking-col-head">Zásahy brankára</div>
+      <div class="ranking-row"><span class="r-name">BOLO, Tomáš</span><span class="r-val">91,2 %</span></div>
+      <div class="ranking-row"><span class="r-name">BALAJ, Šimon</span><span class="r-val">90,1 %</span></div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">
+    <img src="SpartakDubnica.png" alt="Spartak Dubnica">
+    <h3>HK Spartak Dubnica</h3>
+    <p>Partizánska 1118/44<br>018 41 Dubnica nad Váhom</p>
+  </div>
+  <div class="footer-col">
+    <h4>Kontakt</h4>
+    <p>+421 900 123 456</p>
+    <p>info@spartakdubnica.sk</p>
+  </div>
+  <div class="footer-col">
+    <h4>Navigácia</h4>
+    <a href="index.html">Aktuality</a>
+    <a href="ladova-plocha.html">Ľadová plocha</a>
+    <a href="#">Mládež</a>
+    <a href="klub.html">Klub</a>
+  </div>
+  <div class="footer-col">
+    <h4>Sociálne siete</h4>
+    <a href="#">Facebook</a>
+    <a href="#">Instagram</a>
+    <a href="#">Youtube</a>
+  </div>
+  <div class="footer-bottom">© 2026 HK Spartak Dubnica · Všetky práva vyhradené</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
